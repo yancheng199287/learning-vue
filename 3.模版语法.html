@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>模版语法 — Vue.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - The Progressive JavaScript Framework">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body class="container">
+
+    <!-- 双向绑定插值 -->
+    <span id="insert">插值表达式 双向绑定，变量改变将直接作用于视图 Message: {{ msg }}</span>
+
+    <br/>
+
+    <!-- 一次性插值 -->
+    <span id="insert1" v-once>一次性赋值，变量改变不能再次作用于视图: {{ msg }}</span>
+
+    <!-- html标签插值 -->
+    <div id="insert2" v-html="rawHtml"></div>
+
+    <!-- 属性插值 -->
+    <div id="insert3" v-bind:id="userId"></div>
+
+    <!-- 属性插值,条件判断是否存在或移除 -->
+    <button id="insert4" v-bind:disabled="someDynamicCondition">Button</button>
+
+
+    <!-- 使用 JavaScript 表达式 -->
+    <div id="insert5">
+        {{ number + 1 }} {{ ok ? 'YES' : 'NO' }} {{ message.split('').reverse().join('') }}
+    </div>
+
+    <div v-bind:id="'list-' + id"></div>
+
+
+    <!-- 过滤器 
+    Vue.js 允许你自定义过滤器，被用作一些常见的文本格式化。过滤器应该被添加在 mustache 插值的尾部，由“管道符”指示：
+    -->
+    <div id="insert6">
+
+        {{ message | capitalize }}
+
+    </div>
+
+    <!-- 指令 
+   指令（Directives）是带有 v- 前缀的特殊属性。指令属性的值预期是单一 JavaScript 表达式（除了 v-for，之后再讨论）。
+   指令的职责就是当其表达式的值改变时相应地将某些行为应用到 DOM 上
+    -->
+
+    <div id="insert7">
+        <p v-if="seen">根据布尔值判断该标签是否显示</p>
+
+        <a v-bind:href="url">动态绑定url参数</a>
+        <br/> <br/>
+        <a v-on:click="doSomething">点击我事件监听</a>
+    </div>
+
+
+
+</body>
+
+<script>
+    var app = new Vue({
+        el: "#insert",
+        data: {
+            msg: "Hello Vue!"
+        }
+    })
+
+    var app1 = new Vue({
+        el: "#insert1",
+        data: {
+            msg: "Hello Vue!"
+        }
+    })
+
+    var app2 = new Vue({
+        el: "#insert2",
+        data: {
+            rawHtml: '<img src="http://doc.vue-js.com/images/logo.png" width="50px" height="55px" alt="输出html内容" />'
+        }
+    })
+
+    var app3 = new Vue({
+        el: "#insert3",
+        data: {
+            userId: 'username'
+        }
+    })
+
+    var app4 = new Vue({
+        el: "#insert4",
+        data: {
+            someDynamicCondition: false
+        }
+    })
+
+    var app5 = new Vue({
+        el: "#insert5",
+        data: {
+            number: 99,
+            ok: true,
+            message: 'Hello,VueJs!'
+        }
+    })
+
+
+    var app6 = new Vue({
+        el: "#insert6",
+        data: {
+            message: 'a过滤器演示案例，通过使用管道符 使文本的首字母大写'
+        },
+        filters: {
+            capitalize: function (value) {
+                if (!value) return ''
+                value = value.toString()
+                return value.charAt(0).toUpperCase() + value
+            }
+        }
+    })
+
+    var app7 = new Vue({
+        el: "#insert7",
+        data: {
+            seen: true,
+            url: "http://520code.net"
+        },
+        methods: {
+            doSomething: function () {
+                alert('事件监听事件');
+            }
+        }
+    })
+</script>
+
+</html>
