@@ -1,0 +1,148 @@
+<!-- /**
+ * Created by WangZiHe on 2017/10/6
+ * QQ/WeChat:648830605
+ * QQ-Group:368512253
+ * Blog:www.520code.net
+ * Github:https://github.com/yancheng199287
+ */ -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>介绍 — Vue.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - The Progressive JavaScript Framework">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body class="container">
+
+
+    <div id="classBind1" class="static" v-bind:class="{ active: isActive, 'text-danger': hasError }">
+        多个属性绑定
+    </div>
+
+    <div id="classBind2" v-bind:class="classObject">
+        绑定对象
+    </div>
+
+    <div id="classBind3" v-bind:class="classObject">
+        计算属性绑定
+    </div>
+
+    <div id="classBind4" v-bind:class="[activeClass, errorClass]">
+        数组绑定
+    </div>
+
+
+    <div id="classBind5" v-bind:class="[isActive ? activeClass : '', errorClass]">
+        三元表达式绑定
+    </div>
+
+
+
+    <div id="classBind6" v-bind:style="{ color: activeColor, fontSize: fontSize + 'px' }">
+        绑定内联样式 对象语法 绑定多个属性的样式
+    </div>
+
+
+    <div id="classBind7" v-bind:style="styleObject">
+        绑定内联样式 对象语法 绑定对象的样式
+    </div>
+
+
+
+
+
+
+
+
+</body>
+
+<script>
+    var classBind1 = new Vue({
+        el: '#classBind1',
+        /* 
+        当 isActive 或者 hasError 变化时，class 列表将相应地更新。例如，如果isActive  hasError 的值为 true ， class列表将变为 "static active text-danger"。
+         */
+        data: {
+            isActive: true,
+            hasError: false
+        }
+    })
+
+    var classBind2 = new Vue({
+        el: '#classBind2',
+        /* 
+        渲染的结果和上面一样
+         */
+        data: {
+            classObject: {
+                'active': true,
+                'text-danger': true
+            }
+        }
+    })
+
+
+    var classBind3 = new Vue({
+        el: '#classBind3',
+        data: {
+            isActive: true,
+            error: null
+        },
+        // 我们也可以在这里绑定返回对象的计算属性。这是一个常用且强大的模式：
+        computed: {
+            classObject: function () {
+                return {
+                    'active': this.isActive && !this.error,
+                    'text-danger': this.error && this.error.type === 'fatal',
+                }
+            }
+        }
+    })
+
+
+    var classBind4 = new Vue({
+        el: '#classBind4',
+        // 替换要绑定的属性值
+        data: {
+            activeClass: 'active',
+            errorClass: 'text-danger'
+        }
+    })
+
+    // 好像没什么用，求解释？
+    var classBind5 = new Vue({
+        el: '#classBind5',
+        data: {
+            isActive: true,
+            errorClass: false
+        }
+    })
+
+
+    var classBind6 = new Vue({
+        el: '#classBind6',
+        data: {
+            activeColor: 'red',
+            fontSize: 30
+        }
+    })
+
+    var classBind7 = new Vue({
+        el: '#classBind7',
+        data: {
+            styleObject: {
+                color: 'blue',
+                fontSize: '16px'
+            }
+        }
+    })
+</script>
+
+</html>

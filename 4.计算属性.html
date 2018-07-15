@@ -1,0 +1,149 @@
+<!-- /**
+ * Created by WangZiHe on 2017/10/6
+ * QQ/WeChat:648830605
+ * QQ-Group:368512253
+ * Blog:www.520code.net
+ * Github:https://github.com/yancheng199287
+ */ -->
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>介绍 — Vue.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - The Progressive JavaScript Framework">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body class="container">
+
+    <div id="example">
+        <p>Original message: "{{ message }}"</p>
+        <p>使用计算属性，逆序输出值：Computed reversed message: "{{ reversedMessage }}"</p>
+        <p>使用方法逆序输出值 Reversed message1: "{{ reverseMessage1() }}"</p>
+        <p>使用计算属性计算的值是带缓存的 Reversed message1: "{{ now }}"</p>
+    </div>
+
+
+    <div id="demo">{{ fullName }}</div>
+
+
+    <div id="watch-example">
+        <p>
+            Ask a yes/no question:
+            <input v-model="question">
+        </p>
+        <p>{{ answer }}</p>
+    </div>
+
+
+
+</body>
+<script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
+<script>
+    var vm = new Vue({
+        el: '#example',
+        data: {
+            message: 'Hello',
+            info: 'you are beautiful!'
+        },
+        computed: {
+            /*  这里我们声明了一个计算属性 reversedMessage 。我们提供的函数将用作属性 vm.reversedMessage 的  默认getter 。
+                在这里将 hello 进行了逆序输出声明式创建依赖关系
+             */
+            reversedMessage: function () {
+                //  this 代表了当前vm实例，这里reversedMessage依赖于message属性，所以message属性的值改变将会影响reversedMessage
+                return this.message.split('').reverse().join('')
+            },
+            /*  计算属性只有在它的相关依赖发生改变时才会重新取值。这就意味着只要 message 没有发生改变，多次访问 reversedMessage 
+             计算属性会立即返回之前的计算结果，而不必再次执行函数。
+            */
+            now: function () {
+                return Date.now()
+            }
+        },
+        //相比而言，每当重新渲染的时候，method 调用总会执行函数。如果你不希望有缓存，请用 method 替代。
+        methods: {
+            reverseMessage1: function () {
+                return this.message.split('').reverse().join('')
+            }
+        }
+    })
+
+
+
+    var vm1 = new Vue({
+        el: '#demo',
+        data: {
+            firstName: 'Foo',
+            lastName: 'Bar'
+        },
+        // 计算属性默认提供get  如果需要去通过vm实例去改变其值，需要实现set方法
+        computed: {
+            fullName: {
+                // getter
+                get: function () {
+                    return this.firstName + ' ' + this.lastName
+                },
+                // setter 当执行 vm.fullName = 'John Doe' 时， set方法 会被调用， vm.firstName 和 vm.lastName 也会被对应更新。
+                set: function (newValue) {
+                    var names = newValue.split(' ')
+                    this.firstName = names[0]
+                    this.lastName = names[names.length - 1]
+                }
+            }
+        }
+    })
+
+
+    var watchExampleVM = new Vue({
+        el: '#watch-example',
+        data: {
+            question: '',
+            answer: 'I cannot give you an answer until you ask a question!'
+        },
+        // 当你想要在数据变化响应时，执行异步操作或昂贵操作时，这是很有用的。
+        watch: {
+            // 如果 question 发生改变，这个函数就会运行
+            // 使用 watch 选项允许我们执行异步操作（访问一个 API），限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态。这是计算属性无法做到的。
+            question: function (newQuestion) {
+                this.answer = 'Waiting for you to stop typing...'
+                this.getAnswer()
+            }
+        },
+        methods: {
+            // _.debounce 是一个通过 lodash 限制操作频率的函数。
+            // 在这个例子中，我们希望限制访问yesno.wtf/api的频率
+            // ajax请求直到用户输入完毕才会发出
+            // 学习更多关于 _.debounce function (and its cousin
+            // _.throttle), 参考: https://lodash.com/docs#debounce
+            getAnswer: _.debounce(
+                function () {
+                    var vm = this
+                    if (this.question.indexOf('?') === -1) {
+                        vm.answer = 'Questions usually contain a question mark. ;-)'
+                        return
+                    }
+                    vm.answer = 'Thinking...'
+                    axios.get('https://yesno.wtf/api')
+                        .then(function (response) {
+                            vm.answer = _.capitalize(response.data.answer)
+                        })
+                        .catch(function (error) {
+                            vm.answer = 'Error! Could not reach the API. ' + error
+                        })
+                },
+                // 这是我们为用户停止输入等待的毫秒数
+                500
+            )
+        }
+    })
+</script>
+
+</html>

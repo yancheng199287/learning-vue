@@ -1,0 +1,91 @@
+<!-- /**
+ * Created by WangZiHe on 2017/10/6
+ * QQ/WeChat:648830605
+ * QQ-Group:368512253
+ * Blog:www.520code.net
+ * Github:https://github.com/yancheng199287
+ */ -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>介绍 — Vue.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - The Progressive JavaScript Framework">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body class="container">
+
+    <div id="tiaojian">
+        <h1 v-if="ok">Yes</h1>
+        <h1 v-else>No</h1>
+    </div>
+
+    <div id="tiaojian1">
+
+        <!--   此时我们可以把一个 <template> 元素当做包装元素，并在上面使用 v-if，最终的渲染结果不会包含template标签元素。 -->
+        <template v-if="ok">
+            <h1>Title</h1>
+            <p>Paragraph 1</p>
+            <p>Paragraph 2</p>
+        </template>
+    </div>
+
+
+    <div id="tiaojian2">
+        <div v-if="Math.random() > 0.5">
+            Sorry
+        </div>
+        <!--  v-else 元素必须紧跟在 v-if 或 v-show 元素的后面——否则它不能被识别。 -->
+        <div v-else>
+            Not sorry
+        </div>
+    </div>
+
+    <div id="tiaojian3">
+        <!-- v-show 的元素会始终渲染并保持在 DOM 中。v-show 是简单的切换元素的 CSS 属性 display 。-->
+        <h1 v-show="ok">Hello!</h1>
+    </div>
+
+
+
+
+
+</body>
+
+<script>
+    var vm = new Vue({
+        el: '#tiaojian',
+        // 对 vm.ok 属性进行赋值true或 false 将会显示不同的内容
+        data: {
+            ok: true,
+        }
+    })
+
+    var vm1 = new Vue({
+        el: '#tiaojian1',
+        data: {
+            ok: true,
+        }
+    })
+
+
+    var vm2 = new Vue({
+        el: '#tiaojian2',
+    })
+
+
+    var vm3 = new Vue({
+        el: '#tiaojian3',
+        data: {
+            ok: true,
+        }
+    })
+</script>
+
+</html>
