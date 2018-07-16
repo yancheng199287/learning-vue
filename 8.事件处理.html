@@ -1,0 +1,92 @@
+<!-- /**
+ * Created by WangZiHe on 2017/10/6
+ * QQ/WeChat:648830605
+ * QQ-Group:368512253
+ * Blog:www.520code.net
+ * Github:https://github.com/yancheng199287
+ */ -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>介绍 — Vue.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - The Progressive JavaScript Framework">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+
+<body class="container">
+
+    <div id="example-1">
+
+        <button v-on:click="counter += 1">Add 1</button>
+        <p> 可以用 v-on 指令监听 DOM 事件，并在触发时运行一些 JavaScript 代码。 The button above has been clicked {{ counter }} times.</p>
+    </div>
+
+
+    <div id="example-2">
+        <!-- `greet` 是在下面定义的方法名 -->
+        <button v-on:click="greet">点击调用方法Greet</button>
+    </div>
+
+
+    <div id="example-3">
+        <button v-on:click="say('hi')">Say hi</button>
+        <button v-on:click="say('what')">Say what</button>
+
+        <button v-on:click="warn('Form cannot be submitted yet.', $event)">Submit</button>
+    </div>
+
+</body>
+
+<script>
+    var example1 = new Vue({
+        el: '#example-1',
+        data: {
+            counter: 0
+        }
+    })
+
+
+    var example2 = new Vue({
+        el: '#example-2',
+        data: {
+            name: 'Vue.js'
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            greet: function (event) {
+                // `this` 在方法里指向当前 Vue 实例
+                alert('Hello ' + this.name + '!')
+                // `event` 是原生 DOM 事件
+                if (event) {
+                    alert(event.target.tagName)
+                }
+            }
+        }
+    })
+
+    // 也可以用 JavaScript 直接调用方法
+    //example2.greet() // => 'Hello Vue.js!'
+
+
+    new Vue({
+        el: '#example-3',
+        methods: {
+            say: function (message) {
+                alert(message)
+            },
+            warn: function (message, event) {
+                // 现在我们可以访问原生事件对象,阻止默认动作
+                if (event) event.preventDefault()
+                alert(message)
+            }
+        }
+    })
+</script>
+
+</html>
