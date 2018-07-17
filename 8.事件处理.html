@@ -41,6 +41,14 @@
         <button v-on:click="warn('Form cannot be submitted yet.', $event)">Submit</button>
     </div>
 
+
+    <div id="example-4">
+        <!-- 同上 -->
+        <input type="text" v-on:keyup.enter="say('hi')" value="按键修饰符，按Enter键触发事件" size="30" />
+    </div>
+
+
+
 </body>
 
 <script>
@@ -83,6 +91,16 @@
             warn: function (message, event) {
                 // 现在我们可以访问原生事件对象,阻止默认动作
                 if (event) event.preventDefault()
+                alert(message)
+            }
+        }
+    })
+
+
+    new Vue({
+        el: '#example-4',
+        methods: {
+            say: function (message) {
                 alert(message)
             }
         }
