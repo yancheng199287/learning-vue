@@ -31,6 +31,8 @@
         <p>Message is: {{ message }}</p>
     </div>
 
+    <hr/>
+
     <div id="example-2">
         <span>在文本区域插值( &lt;textarea> &lt;/textarea> ) 并不会生效，应用 v-model 来代替:</span>
         <p style="white-space: pre">{{ message }}</p>
@@ -38,6 +40,7 @@
         <textarea v-model="message" placeholder="add multiple lines"></textarea>
     </div>
 
+    <hr />
 
     <div id="example-3">
         <span> 复选框按钮</span>
@@ -53,6 +56,8 @@
         <span>Checked names: {{ checkedNames }}</span>
     </div>
 
+    <hr />
+
 
     <div id="example-4">
         <span> 单选框按钮</span>
@@ -65,6 +70,7 @@
         <span>Picked: {{ picked }}</span>
 
     </div>
+    <hr />
 
     <div id="example-5">
         <span> 下拉列表</span>
@@ -76,6 +82,8 @@
         <span>Selected: {{ selected }}</span>
 
     </div>
+
+    <hr />
 
 
     <div id="example-6">
@@ -89,6 +97,8 @@
         <span>Selected: {{ selected }}</span>
     </div>
 
+    <hr />
+
 
     <div id="example-7">
         <span> 动态选项，用 v-for 渲染选择列表</span>
@@ -101,32 +111,72 @@
 
     </div>
 
+    <hr />
+
     <div id="example-8">
+
+        <p>
+            v-bind与v-model区别? v-model用在表单控件上的，用于实现双向数据绑定，所以如果你用在除了表单控件以外的标签是没有任何效果的。 v-bind用于绑定属性和数据 ，其缩写为“ : ” 也就是v-bind:id === :id
+        </p>
 
         <input type="checkbox" v-model="toggle" v-bind:true-value="a" v-bind:false-value="b">
 
     </div>
 
+    <hr />
+
     <div id="example-9">
+
+        <input type="radio" v-model="pick" v-bind:value="a">
 
     </div>
 
+    <hr />
 
     <div id="example-10">
 
+        <select v-model="selected">
+            <!-- 内联对象字面量 -->
+            <option v-bind:value="{ number: 123 }">123</option>
+        </select>
+
     </div>
+
+    <hr />
 
 
     <div id="example-11">
 
+        <p>
+            在默认情况下， v-model 在 input 事件中同步输入框的值与数据，但你可以添加一个修饰符 lazy ，从而转变为在 change 事件中同步： 当你输入完数据，光标移除输入框后触发事件
+        </p>
+        <!-- 在 "change" 而不是 "input" 事件中更新 -->
+        <input v-model.lazy="msg">
+
+        <span>{{msg}}</span>
+
     </div>
+
+    <hr />
 
 
     <div id="example-12">
+        <p>如果想自动将用户的输入值转为 Number 类型（如果原值的转换结果为 (NaN,NaN 属性是代表非数字值的特殊值) 则返回原值），可以添加一个修饰符 number 给 v-model 来处理输入值： 控制台输入 typeof
+            example12.age 返回 “number”
+        </p>
 
+        <input v-model.number="age" type="number">
     </div>
 
+    <hr />
+
     <div id="example-13">
+
+        <p>
+            如果要自动过滤用户输入的首尾空格，可以添加 trim 修饰符到 v-model 上过滤输入
+        </p>
+
+        <input v-model.trim="msg">
 
     </div>
 
@@ -208,9 +258,47 @@
     var example8 = new Vue({
         el: '#example-8',
         data: {
-            toggle: false,
-            a: false,
+            toggle: true,
+            a: true,
             b: false
+        }
+    })
+
+    var example9 = new Vue({
+        el: '#example-9',
+        data: {
+            pick: true,
+            a: false
+        }
+    })
+
+    var example10 = new Vue({
+        el: '#example-10',
+        data: {
+            selected: '123'
+        }
+    })
+
+
+    var example11 = new Vue({
+        el: '#example-11',
+        data: {
+            msg: '123'
+        }
+    })
+
+    var example12 = new Vue({
+        el: '#example-12',
+        data: {
+            age: 0
+        }
+    })
+
+
+    var example13 = new Vue({
+        el: '#example-13',
+        data: {
+            msg: 0
         }
     })
 </script>
