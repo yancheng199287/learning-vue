@@ -17,16 +17,136 @@
     <!-- 开发环境版本，包含了用帮助的命令行警告 -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+    <script>
+        Vue.component('button-counter', {
+            template: '<button v-on:click="increment">{{ counter }}</button>',
+            data: function () {
+
+            },
+            methods: {
+
+            },
+        })
+    </script>
+
 </head>
 
 <body class="container">
 
+    <a href="https://cn.vuejs.org/v2/guide/components.html">doc文档来源</a>
 
+    <div id="components-demo1">
+
+    </div>
+
+    <hr/>
+
+    <div id="components-demo2">
+
+    </div>
+
+
+    <hr/>
+
+    <div id="components-demo3">
+
+    </div>
+
+    <hr/>
+
+    <div id="components-demo4">
+
+
+    </div>
+
+
+    <hr/>
+
+
+    <div id="components-demo5">
+
+
+    </div>
+
+
+    <hr/>
+
+
+    <div id="components-demo6">
+
+
+    </div>
+
+    <hr/>
+
+    <div id="components-demo7">
+
+
+    </div>
 
 
 </body>
 
 <script>
+    new Vue({
+        el: '#components-demo1',
+        data: {
+
+
+        }
+    })
+
+    new Vue({
+        el: '#components-demo2',
+        data: {
+
+
+        }
+    })
+
+    new Vue({
+        el: '#components-demo3',
+        data: {
+
+
+        }
+    })
+
+
+    new Vue({
+        el: '#components-demo4',
+        data: {
+
+
+        }
+    })
+
+
+    new Vue({
+        el: '#components-demo5',
+        data: {
+
+
+        }
+    })
+
+
+    new Vue({
+        el: '#components-demo6',
+        data: {
+
+
+        }
+    })
+
+
+    new Vue({
+        el: '#components-demo7',
+        data: {
+
+
+        }
+    })
 </script>
 
 </html>

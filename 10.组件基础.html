@@ -1,0 +1,206 @@
+<!-- /**
+ * Created by WangZiHe on 2017/10/6
+ * QQ/WeChat:648830605
+ * QQ-Group:368512253
+ * Blog:www.520code.net
+ * Github:https://github.com/yancheng199287
+ */ -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>组件基础 — Vue.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - The Progressive JavaScript Framework">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        // 定义一个名为 button-counter 的新组件,两种组件的注册类型：全局注册和局部注册  这里是全局
+        Vue.component('button-counter', {
+            //一个组件的 data 选项必须是一个函数，因此每个实例可以维护一份被返回对象的独立的拷贝：
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
+        })
+
+
+        Vue.component('blog-post', {
+            // 一个组件默认可以拥有任意数量的 prop，任何值都可以传递给任何 prop。
+            props: ['id', 'title'],
+            template: '<h3>{{id}}.{{title}}</h3>'
+        })
+
+        Vue.component('blog-post-content', {
+            // 它变成接受一个单独的 post prop： 接受一个对象，而不用写很多属性了
+            props: ['post'],
+            template: `<div class="blog-post">
+      <h3>{{post.id}}.{{ post.title }}</h3>
+      <div v-html="post.content"></div>
+    </div>
+  `
+        })
+
+        Vue.component('validate-test', {
+            // 一个组件默认可以拥有任意数量的 prop，任何值都可以传递给任何 prop。
+            props: {
+                // 必须是数字
+                id: Number,
+                // 必须是字符串
+                title: String,
+                // 数字或者字符串都可以
+                description: [Number, String],
+                // 必须是字符串，而且是必填项
+                introduce: {
+                    type: String,
+                    require: true
+                },
+                // 必须是字符串，如果不赋值 取出默认值
+                content: {
+                    type: String,
+                    default: '我是一个默认值'
+                }
+            },
+            template: '<span>{{id}}  {{title}} {{description}} {{introduce}} {{content}}  </span>'
+        })
+    </script>
+
+    <style>
+        #components-demo {
+            width: 250px;
+            height: 100%;
+        }
+
+        button {
+            font-size: 20px;
+            float: left;
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body class="container">
+
+    <a href="https://cn.vuejs.org/v2/guide/components.html">doc文档来源</a>
+
+    <div id="components-demo1">
+        <p>1. 注意当点击按钮时，每个组件都会各自独立维护它的 count。因为你每用一次组件，就会有一个它的新实例被创建。</p>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+        <button-counter></button-counter>
+    </div>
+
+    <hr/>
+
+    <div id="components-demo2">
+        <p>1. 通过 Prop 向子组件传递数据，一个 prop 被注册之后，你就可以像这样把数据作为一个自定义特性传递进来</p>
+        <blog-post id="1" title="My journey with Vue"></blog-post>
+        <blog-post id="2" title="Blogging with Vue"></blog-post>
+        <blog-post id="3" title="Why Vue is so fun"></blog-post>
+    </div>
+
+
+    <hr/>
+
+    <div id="components-demo3">
+        <!-- 我们需要使用key来给每个节点做一个唯一标识，Diff算法就可以正确的识别此节点，找到正确的位置区插入新的节点 
+           key 不能作为标签属性
+        -->
+        <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:id="post.id" v-bind:title="post.title"></blog-post>
+    </div>
+
+    <hr/>
+
+    <div id="components-demo4">
+        <blog-post-content v-for="post in posts" v-bind:key="post.id" v-bind:post="post"></blog-post-content>
+    </div>
+
+
+    <hr/>
+
+
+    <div id="components-demo5">
+        <p>vue props参数验证</p>
+        <validate-test v-bind:id="id" v-bind:title="title" v-bind:description="description" v-bind:introduce="introduce" v-bind:content="content"></validate-test>
+    </div>
+
+
+    <div id="components-demo6">
+    </div>
+
+
+</body>
+
+<script>
+    new Vue({
+        el: '#components-demo1'
+    })
+
+    new Vue({
+        el: '#components-demo2'
+    })
+
+    new Vue({
+        el: '#components-demo3',
+        data: {
+            posts: [{
+                    id: 1,
+                    title: '从今天开始认识你'
+                },
+                {
+                    id: 2,
+                    title: '博客因你而精彩'
+                },
+                {
+                    id: 3,
+                    title: '今天很开心'
+                }
+            ]
+        }
+    })
+
+
+    new Vue({
+        el: '#components-demo4',
+        data: {
+            posts: [{
+                    id: 1,
+                    title: '从今天开始认识你',
+                    content: "于万千人海中看见你，那一刻，我便知道就是你了"
+                },
+                {
+                    id: 2,
+                    title: '博客因你而精彩',
+                    content: "你就是我的精彩，我的全部"
+
+                },
+                {
+                    id: 3,
+                    title: '今天很开心',
+                    content: "开心因你，不开心也是因你"
+
+                }
+            ]
+        }
+    })
+
+
+    new Vue({
+        el: '#components-demo5',
+        data: {
+            id: 123,
+            title: '我是title，字符串和数字都支持的类型',
+            description: '描述内容',
+            introduce: "hello",
+            content:undefined //  注意null 不会设置默认值
+        }
+    })
+</script>
+
+</html>

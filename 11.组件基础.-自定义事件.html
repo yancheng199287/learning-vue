@@ -1,0 +1,176 @@
+<!-- /**
+ * Created by WangZiHe on 2017/10/6
+ * QQ/WeChat:648830605
+ * QQ-Group:368512253
+ * Blog:www.520code.net
+ * Github:https://github.com/yancheng199287
+ */ -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>介绍 — Vue.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - The Progressive JavaScript Framework">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        Vue.component('button-counter', {
+            // 注意模版这里的v-on:click 点击事件 触发 本对象的的方法 increment: function ()
+            template: '<button v-on:click="increment">{{ counter }}</button>',
+            data: function () {
+                return {
+                    counter: 0
+                }
+            },
+
+            // 绑定模版组件的触发事件方法
+            methods: {
+                increment: function () {
+                    this.counter += 1
+
+                    //  发送事件到父组件   <button-counter v-on:increment="incrementTotal"></button-counter> 触发父组件 incrementTotal: function ()
+                    this.$emit('click-me')
+                }
+            },
+        })
+
+
+        Vue.component('blog-post', {
+            props: ['post'],
+            template: `
+    <div class="blog-post">
+      <h3>{{ post.title }}</h3>
+<button v-on:click="$emit('enlarge-text',0.2)">
+         点击我放大文本
+      </button>
+      <div v-html="post.content"></div>
+    </div>
+  `
+        })
+
+
+        Vue.component('alert-box', {
+            template: `
+    <div class="demo-alert-box">
+      <strong>Error!</strong>
+      <span style="font-size:20px;color:red;">
+
+      <slot>加入插槽,这个slot标签会被替换掉，外部的html内容会在这里显示</slot>
+      </span>
+    </div>
+  `
+        })
+    </script>
+
+
+    <script>
+        Vue.component('tab-home', {
+            template: '<div>Home component</div>'
+        })
+        Vue.component('tab-posts', {
+            template: '<div>Posts component</div>'
+        })
+        Vue.component('tab-archive', {
+            template: '<div>Archive component</div>'
+        })
+    </script>
+
+</head>
+
+<body class="container">
+
+    <a href="https://cn.vuejs.org/v2/guide/components.html">doc文档来源</a>
+
+    <div id="components-demo1">
+
+        <p>{{ total }}</p>
+        <button-counter v-on:click-me="incrementTotal"></button-counter>
+        <button-counter v-on:click-me="incrementTotal"></button-counter>
+    </div>
+
+
+
+    <hr/>
+
+    <div id="components-demo2">
+        <div id="blog-posts-events-demo">
+            <div v-bind:style="{ fontSize: postFontSize + 'em' }" id="blog-article">
+                <blog-post v-for="post in posts" v-bind:key="post.id" v-bind:post="post" v-on:enlarge-text="onEnlargeText"></blog-post>
+            </div>
+        </div>
+    </div>
+
+
+    <hr/>
+
+    <div id="components-demo3">
+        <alert-box>
+            Something bad happened.，I am a slot！
+        </alert-box>
+
+    </div>
+
+    <hr/>
+
+    <div id="components-demo4">
+        <div id="dynamic-component-demo" class="demo">
+            <button v-for="tab in tabs" v-bind:key="tab" v-bind:class="['tab-button', { active: currentTab === tab }]" v-on:click="currentTab = tab">{{ tab }}</button>
+
+            <component v-bind:is="currentTabComponent" class="tab"></component>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    new Vue({
+        el: '#components-demo1',
+        data: {
+            total: 0
+        },
+        methods: {
+            incrementTotal: function () {
+                this.total += 1
+            }
+        }
+    })
+
+    new Vue({
+        el: '#components-demo2',
+        data: {
+            posts: [{
+                id: 1,
+                title: '通过事件向父级组件发送消息',
+                content: "在button中调用内建的 $emit 方法并传入事件的名字，来向父级组件触发一个事件"
+            }],
+            postFontSize: 0.1
+        },
+        methods: {
+            onEnlargeText: function (enlargeAmount) {
+                console.log("enlargeAmount:" + enlargeAmount)
+                this.postFontSize += enlargeAmount
+            }
+        }
+    })
+
+    new Vue({
+        el: '#components-demo4',
+        data: {
+            currentTab: 'Home',
+            tabs: ['Home', 'Posts', 'Archive']
+        },
+        computed: {
+            currentTabComponent: function () {
+                console.log("currentTab:" + this.currentTab)
+
+                return 'tab-' + this.currentTab.toLowerCase()
+            }
+        }
+    })
+</script>
+
+</html>

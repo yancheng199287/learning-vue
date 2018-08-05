@@ -1,0 +1,82 @@
+<!-- /**
+ * Created by WangZiHe on 2017/10/6
+ * QQ/WeChat:648830605
+ * QQ-Group:368512253
+ * Blog:www.520code.net
+ * Github:https://github.com/yancheng199287
+ */ -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>介绍 — Vue.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - The Progressive JavaScript Framework">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        Vue.component('tab-home', {
+            template: '<div>Home component</div>'
+        })
+        Vue.component('tab-posts', {
+            template: '<div>Posts component</div>'
+        })
+        Vue.component('tab-archive', {
+            template: '<div>Archive component</div>'
+        })
+    </script>
+
+</head>
+
+<body class="container">
+
+
+    <div id="components-demo1">
+
+        <div id="dynamic-component-demo" class="demo">
+            <button v-for="tab in tabs" v-bind:key="tab" v-bind:class="['tab-button', { active: currentTab === tab }]" v-on:click="currentTab = tab">{{ tab }}</button>
+
+            <component v-bind:is="currentTabComponent" class="tab"></component>
+        </div>
+
+    </div>
+
+    <hr/>
+
+    <div id="components-demo2">
+
+    </div>
+
+
+    <hr/>
+
+
+</body>
+
+<script>
+    new Vue({
+        el: '#components-demo1',
+        data: {
+            currentTab: 'Home',
+            tabs: ['Home', 'Posts', 'Archive']
+        },
+        computed: {
+            currentTabComponent: function () {
+                return 'tab-' + this.currentTab.toLowerCase()
+            }
+        }
+    })
+
+    new Vue({
+        el: '#components-demo2',
+        data: {
+
+
+        }
+    })
+</script>
+
+</html>
