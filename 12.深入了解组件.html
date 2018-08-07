@@ -38,8 +38,10 @@
 
         <div id="dynamic-component-demo" class="demo">
             <button v-for="tab in tabs" v-bind:key="tab" v-bind:class="['tab-button', { active: currentTab === tab }]" v-on:click="currentTab = tab">{{ tab }}</button>
-
-            <component v-bind:is="currentTabComponent" class="tab"></component>
+            如果把切换出去的组件保留在内存中，可以保留它的状态或避免重新渲染。为此可以添加一个 keep-alive 指令参数：
+            <keep-alive>
+                <component v-bind:is="currentTabComponent" class="tab"></component>
+            </keep-alive>
         </div>
 
     </div>

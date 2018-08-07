@@ -1,0 +1,194 @@
+<!-- /**
+ * Created by WangZiHe on 2017/10/6
+ * QQ/WeChat:648830605
+ * QQ-Group:368512253
+ * Blog:www.520code.net
+ * Github:https://github.com/yancheng199287
+ */ -->
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <title>介绍 — Vue.js</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Vue.js - The Progressive JavaScript Framework">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- 开发环境版本，包含了用帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link href="https://cdn.bootcss.com/animate.css/3.5.2/animate.css" rel="stylesheet">
+
+
+    <style>
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity .5s
+        }
+
+        .fade-enter,
+        .fade-leave-active {
+            opacity: 0
+        }
+
+
+
+
+        /* 可以设置不同的进入和离开动画 */
+
+        /* 设置持续时间和动画函数 */
+
+        .slide-fade-enter-active {
+            transition: all .6s ease;
+        }
+
+        .slide-fade-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+
+        .slide-fade-enter,
+        .slide-fade-leave-active {
+            padding-left: 20px;
+            opacity: 0;
+        }
+
+
+
+        .bounce-enter-active {
+            animation: bounce-in .5s;
+        }
+
+        .bounce-leave-active {
+            animation: bounce-out .5s;
+        }
+
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes bounce-out {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        Toggle show
+    </style>
+
+    <script>
+    </script>
+
+</head>
+
+<body class="container">
+
+
+    <div id="components-demo1">
+        <div id="demo">
+            <button v-on:click="show = !show">
+                Toggle1
+            </button>
+            <!-- fade是重置前缀类名 -->
+            <transition name="fade">
+                <p v-if="show">Vue 提供了 transition 的封装组件，在下列情形中，可以给任何元素和组件添加 entering/leaving 过渡</p>
+            </transition>
+        </div>
+    </div>
+
+
+    <div id="components-demo2">
+        <div id="example-1">
+            <button @click="show = !show">
+                Toggle2 render
+            </button>
+            <transition name="slide-fade">
+                <p v-if="show">hello</p>
+            </transition>
+        </div>
+    </div>
+
+
+    <div id="components-demo3">
+        <div id="example-2">
+            <button @click="show = !show">Toggle3 show</button>
+            <transition name="bounce">
+                <p v-if="show">css动画 Look at me!</p>
+            </transition>
+        </div>
+
+    </div>
+
+
+
+    <div id="components-demo4">
+        <div id="example-3">
+            <button @click="show = !show">
+                Toggle4 render
+            </button>
+            <transition name="custom-classes-transition" enter-active-class="animated tada" leave-active-class="animated bounceOutRight">
+                <p v-if="show">自定义过渡类名，适合与其他动画css结合</p>
+            </transition>
+        </div>
+
+    </div>
+
+
+
+    <div id="components-demo5">
+
+
+    </div>
+
+
+
+
+
+    <script>
+        new Vue({
+            el: '#components-demo1',
+            data: {
+
+                show: false
+
+            }
+        })
+
+
+        new Vue({
+            el: '#components-demo2',
+            data: {
+                show: true
+            }
+        })
+
+
+        new Vue({
+            el: '#components-demo3',
+            data: {
+                show: true
+            }
+        })
+
+        new Vue({
+            el: '#components-demo4',
+            data: {
+                show: true
+            }
+        })
+    </script>
+
+
+</html>
